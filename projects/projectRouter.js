@@ -1,7 +1,6 @@
 const express = require('express');
 const db = require('../data/helpers/projectModel');
 
-
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -29,6 +28,20 @@ db.getProjectActions(id)
 });
 });
 
+router.get('/:id/actions', validateId, (req,res) => {
+    const id = req.params.id;
+    db.getProjectActions(id)
+        .then(response => {
+            res.status(200).json(response)
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(500).json({
+                error: "Could not retrieve project actions"
+            })
+        })
+})
+
 router.post('/',  validateProject, (req, res) => {
     const project = req.body;
     db.insert(project)
@@ -51,14 +64,14 @@ router.put('/:id', validateId, (req, res) => {
     })
     .catch(error => {
         console.log(error);
-        res.status(500).json({ error: "There was an error while saving the user information" });
+        res.status(500).json({ error: "There was an error while saving the project information" });
     });
 })
 
 router.delete('/:id', validateId, (req, res) =>{
     db.remove(req.params.id)
     .then(remove => {
-        res.status(200).json({ message: 'project was successfully deleted'})
+        res.status(200).json({ message: 'project was successfully deleted', remove})
     })
     .catch(error => {
         console.log(error);
@@ -81,12 +94,12 @@ function validateId (req, res, next) {
         }
         else {
             res.status(400).json({
-                message: `invalid project id`
+                message: "invalid project id"
             })
         }
     })
     .catch(error => {
-        res.status(500).json({ error: `Project does not exist`, error
+        res.status(500).json({ error: "Project does not exist", error
         });
     });
 };

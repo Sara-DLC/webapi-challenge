@@ -1,7 +1,9 @@
 const express = require('express');
 const helmet = require('helmet');
 
-const project = require('../projects/projectRouter');
+const projectRouter = require('../projects/projectRouter');
+const actionRouter = require('../projects/actionRouter');
+
 
 const server = express();
 
@@ -15,7 +17,8 @@ server.use(helmet());
 server.use(express.json());
 server.use(logger);
 
-server.use('/api/projects', project);
+server.use('/api/projects', projectRouter);
+server.use('/api/actions', actionRouter);
 
 server.get('/', (req, res) => {
     res.send(`Welcome from server.js`);
