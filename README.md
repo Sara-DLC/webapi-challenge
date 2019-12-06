@@ -40,13 +40,23 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Mention two parts of Express that you learned about this week.
 
+    -- Express middleware and Routers
+
 - [ ] Describe Middleware?
+
+    -- Middle is a gatekeeper that goes through a series of steps in a function before executing a block of code. This can be used for things such as authentication and route access. 
 
 - [ ] Describe a Resource?
 
+    -- anything can be a resource, for our purpose when using express it can be one or more programs that are designed to carry out operations for a specific purpose. 
+
 - [ ] What can the API return to help clients know if a request was successful?
 
+    -- A HTTP response message
+
 - [ ] How can we partition our application into sub-applications?
+
+     -- by using .use() as a sub-router. We can create new instances in an express object. 
 
 ## Minimum Viable Product
 
