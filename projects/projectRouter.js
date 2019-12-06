@@ -41,7 +41,19 @@ router.post('/',  validateProject, (req, res) => {
     });
 });
 
+router.put('/:id', validateId, (req, res) => {
+    const changes = req.body;
+    const id = req.params.id;
 
+    db.update(id, changes)
+    .then(change => {
+        res.status(200).json(change);
+    })
+    .catch(error => {
+        console.log(error);
+        res.status(500).json({ error: "There was an error while saving the user information" });
+    });
+})
 
 
 
