@@ -55,6 +55,17 @@ router.put('/:id', validateId, (req, res) => {
     });
 })
 
+router.delete('/:id', validateId, (req, res) =>{
+    db.remove(req.params.id)
+    .then(remove => {
+        res.status(200).json({ message: 'project was successfully deleted'})
+    })
+    .catch(error => {
+        console.log(error);
+        res.status(500).json({ error: "The post could not be removed" });
+    });
+})
+
 
 
 
