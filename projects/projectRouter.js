@@ -29,6 +29,21 @@ db.getProjectActions(id)
 });
 });
 
+router.post('/',  validateProject, (req, res) => {
+    const project = req.body;
+    db.insert(project)
+    .then(newData => {
+        res.status(201).json(newData)
+    })
+    .catch(error => {
+        console.log(error);
+        res.status(500).json({error: "There was an error while saving the project to the database"  })
+    });
+});
+
+
+
+
 
 
 //middleware
@@ -53,6 +68,17 @@ function validateId (req, res, next) {
     });
 };
 
+function validateProject (req, res, next) {
+    if (Object.keys(req.body).length > 0) {
+        if (req.body.description && req.body.name){
+            next();
+        } else {
+            res.status(400).json({ errorMessage: "Please provide a name and description for the project."})
+        } 
+    } else {
+        res.status(400).json({ errorMessage: "There was an error while saving the project to the database" })
+    }
+}
 
 
 module.exports = router;
